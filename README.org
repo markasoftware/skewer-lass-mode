@@ -1,0 +1,30 @@
+#+TITLE: skewer-lass-mode
+
+Connects [[https://github.com/skeeto/skewer-mode][skewer-mode]] and Shinmera's
+[[https://github.com/shinmera/lass][LASS]] (Lisp Augmented Style Sheets) for live CSS updates in the
+browser, where the CSS is generated from LASS in a live website.
+
+skewer-lass-mode is designed to work when your lass source is in its own file as well as when it is
+interspersed with other Lisp code. In the former case, you will probably find
+~skewer-lass-eval-defun~ and ~skewer-lass-eval-buffer~ to be useful. In the latter case, you will
+mostly be using ~skewer-lass-eval-last-sexp~ and ~skewer-lass-eval-region~.
+
+** Usage
+   Call ~skewer-lass-eval-defun~, ~skewer-lass-eval-buffer~, ~skewer-lass-eval-last-sexp~, and
+   ~skewer-lass-eval-region~ as necessary. You'll want startup Skewer and establish a SLIME session
+   beforehand. If you enable the ~skewer-lass-mode~ minor mode, you get some default keybindings:
+
+   - ~C-c C-M-x~: ~skewer-lass-eval-defun~
+   - ~C-c C-e~: ~skewer-lass-eval-last-sexp~
+   - ~C-c C-k~: ~skewer-lass-eval-buffer~
+   - ~C-c C-c~: ~skewer-css-clear-all~
+
+   (There's no default binding for ~skewer-lass-eval-region~).
+
+   All these functions will try to load LASS via quicklisp if it is not present.
+
+   If your LASS is interspersed with other Lisp code, it might be quoted. In a naïve implementation,
+   ~skewer-lass-eval-last-sexp~ would pass the quoted sexp to the LASS compiler, which would cause
+   an error. ~skewer-lass-mode~ will try to be a bit smarter, and will automatically evaluate quoted
+   (or quasiquoted) expressions before passing them to LASS. If this is not desired, set the
+   ~slime-lass-eval~ variable as per its documentation.

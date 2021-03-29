@@ -51,8 +51,11 @@
                                     ,(skewer-lass-feature-symbol :sbcl "SB-INT" "QUASIQUOTE")
                                     ,(skewer-lass-feature-symbol :clisp "SYSTEM" "BACKQUOTE")
                                     ,(skewer-lass-feature-symbol :ecl "SI" "QUASIQUOTE")
-                                    ,(skewer-lass-feature-symbol :abcl "SYSTEM" "BACKQ-LIST"))
-                                   ;; CCL appears expands backquotes early
+                                    ,(skewer-lass-feature-symbol :abcl "SYSTEM" "BACKQ-LIST")
+                                    ;; CCL usually expands things pretty early, so we can't reliably
+                                    ;; detect if the expression came from a backquote. This will
+                                    ;; handle many common situations.
+                                    ,(skewer-lass-feature-symbol :ccl "CL" "LIST*"))
                                    )))
                          (cl:eval lass-form)
                          lass-form))))))))
